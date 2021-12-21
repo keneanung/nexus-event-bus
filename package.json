@@ -9,7 +9,7 @@
   "devDependencies": {
     "@keneanung/iron-realms-nexus-typings": "^0.1.0",
     "@types/jest": "^27.0.3",
-    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "acorn": "^8.6.0",
     "eslint": "^8.5.0",

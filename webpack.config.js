@@ -18,10 +18,11 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'nxs'),
     library : {
-      type: "var",
-      name: configData.libraryName
+      type: "window",
+      name: configData.libraryName,
+      export: "default"
     }
   },
   plugins: [new ESLintPlugin({

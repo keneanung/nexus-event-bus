@@ -1,5 +1,6 @@
 node_modules
-/dist
+/nxs/bundle.js
 /lib
 *.tgz
 /coverage
+/nxs/*.nxs

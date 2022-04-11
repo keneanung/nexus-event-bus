@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://keneanung.github.io/nexus-event-bus/blog</id>
+    <title>Iron Realms Nexus Event Bus Blog</title>
+    <updated>2021-10-27T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://keneanung.github.io/nexus-event-bus/blog"/>
+    <subtitle>Iron Realms Nexus Event Bus Blog</subtitle>
+    <icon>https://keneanung.github.io/nexus-event-bus/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Hello World]]></title>
+        <id>Hello World</id>
+        <link href="https://keneanung.github.io/nexus-event-bus/blog/2021/10/27/_hello_world"/>
+        <updated>2021-10-27T00:00:00.000Z</updated>
+    </entry>
+</feed>

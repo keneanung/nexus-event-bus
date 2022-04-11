@@ -8,7 +8,7 @@
   "main": "lib/index.js",
   "devDependencies": {
     "@keneanung/iron-realms-nexus-typings": "^0.1.0",
-    "@keneanung/nexus-package-builder": "^1.0.3",
+    "@keneanung/nexus-package-builder": "^1.1.0",
     "@types/jest": "^27.4.1",
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",

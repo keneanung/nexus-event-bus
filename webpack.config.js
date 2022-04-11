@@ -20,7 +20,7 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'nxs'),
     library : {
-      type: "window",
+      type: "global",
       name: configData.libraryName,
       export: "default"
     }

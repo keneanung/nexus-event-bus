@@ -26,4 +26,4 @@ eventBus.raise('myEvent', 'Hello World!');
 
 This will print `Hello World!` to the console.
 
-For documentation on the inidividual methods, advanced usage and some best practices, see the [Nexus Event Bus documentation](https://keneanung.github.io/nexus-event-bus/docs/index/).
+For documentation on the inidividual methods, advanced usage and some best practices, see the [Nexus Event Bus documentation](https://keneanung.github.io/nexus-event-bus/docs/).

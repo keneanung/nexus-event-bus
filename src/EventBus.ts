@@ -3,7 +3,7 @@
 declare type EventCallback<T extends any = any> = (argument: T) => Promise<void>;
 
 /**
- * Event bus whichallows the user to subscribe to events and
+ * Event bus which allows the user to subscribe to events and
  * have given functions called upon the event being raised.
  */
 export interface IEventBus {

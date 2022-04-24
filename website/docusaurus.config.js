@@ -32,6 +32,10 @@ const config = {
           // Please change this to your repo.
           editUrl:
             `${configData.githubRepoWebUrl}/edit/development/website/blog/`,
+          feedOptions: {
+              type: 'all',
+              copyright: `Copyright © ${new Date().getFullYear()} keneanung`,
+            },
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

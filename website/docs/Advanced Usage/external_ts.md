@@ -21,7 +21,7 @@ declare global {
 
 The `eslint-disable-next-line` is there to prevent the ESLint rule `no-var` from complaining about the global variable. But we need to declare it as `var` to be able to assign it in tests.
 
-To make the tests work, the easiest way would be to install the npm package `jest-mock-extended` as a development dependency and us it like this:
+To make the tests work, the easiest way would be to install the npm package `jest-mock-extended` as a development dependency and use it like this:
 
 ```typescript
 import { mock } from 'jest-mock-extended';

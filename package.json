@@ -13,7 +13,7 @@
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/experimental-utils": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
-    "acorn": "^8.7.0",
+    "acorn": "^8.7.1",
     "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^26.1.5",

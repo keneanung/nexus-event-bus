@@ -10,6 +10,7 @@
     "@keneanung/iron-realms-nexus-typings": "^0.1.0",
     "@keneanung/nexus-package-builder": "^1.1.0",
     "@types/jest": "^27.4.1",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/experimental-utils": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
@@ -50,5 +51,8 @@
     "lib/**/*",
     "!lib/**/__tests__/*",
     "!lib/webpack/**/*"
-  ]
+  ],
+  "dependencies": {
+    "uuid": "^8.3.2"
+  }
 }

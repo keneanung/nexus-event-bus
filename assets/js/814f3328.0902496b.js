@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[535],{5641:function(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Hello World","permalink":"/nexus-event-bus/blog/2021/10/27/_hello_world"}]}')}}]);

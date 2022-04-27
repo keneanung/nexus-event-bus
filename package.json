@@ -11,7 +11,7 @@
     "@keneanung/nexus-package-builder": "^1.1.0",
     "@types/jest": "^27.4.1",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/experimental-utils": "^5.20.0",
+    "@typescript-eslint/experimental-utils": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "acorn": "^8.7.1",
     "eslint": "^8.14.0",

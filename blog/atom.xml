@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://keneanung.github.io/@keneanung/nexus-event-bus/blog</id>
+    <id>https://keneanung.github.io/nexus-event-bus/blog</id>
     <title>Iron Realms Nexus Event Bus Blog</title>
-    <updated>2021-04-11T00:00:00.000Z</updated>
+    <updated>2021-04-27T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://keneanung.github.io/@keneanung/nexus-event-bus/blog"/>
+    <link rel="alternate" href="https://keneanung.github.io/nexus-event-bus/blog"/>
     <subtitle>Iron Realms Nexus Event Bus Blog</subtitle>
-    <icon>https://keneanung.github.io/@keneanung/nexus-event-bus/img/favicon.ico</icon>
+    <icon>https://keneanung.github.io/nexus-event-bus/img/favicon.ico</icon>
     <rights>Copyright © 2022 keneanung</rights>
+    <entry>
+        <title type="html"><![CDATA[Khasseems Wishlist: v0.1.1]]></title>
+        <id>/2021/04/27/_Khassems_Wishlist</id>
+        <link href="https://keneanung.github.io/nexus-event-bus/blog/2021/04/27/_Khassems_Wishlist"/>
+        <updated>2021-04-27T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[This release is something, the Achaean Player Khaseem wished for. He's been using the original EventStream module of NexSys very extenively. However, he'd like to move to an external package to help the adoption of a standard set of Nexus packages.]]></summary>
+        <content type="html"><![CDATA[<p>This release is something, the Achaean Player Khaseem wished for. He's been using the original EventStream module of NexSys very extenively. However, he'd like to move to an external package to help the adoption of a standard set of Nexus packages.</p><p>The original EventStream had a set of features that were part of his development flow: The ability to unsubscribe from events using a function name and access to the list of subscribers to an event.</p><p>While the former is about a preferred coding style, the latter is useful for debugging code: That way you can easily have a look at the list of subscribers to an event and determine if all subscribers actually belong there at this point.</p><h2 class="anchor anchorWithStickyNavbar_mojV" id="new-features">New Features<a class="hash-link" href="#new-features" title="Direct link to heading">​</a></h2><p>You may now subscribe or unsubscribe to events using a callback function name instead of a function reference. To avoid accidental overwriting of existing callbacks, especially between different users of the EventBus, duplicate subscription names generate an error. So you may want to namespace your event names.</p><p>You can now access the list of subscribers to an event using the <code>getSubscribers</code> method. This allows easy inspection of the subscription state of callbacks. The subscribers may not be changed this way.</p>]]></content>
+        <author>
+            <name>keneanung</name>
+            <email>keneanung@gmail.com</email>
+            <uri>https://github.com/keneanung</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Initial Release v0.0.3]]></title>
         <id>/2021/04/11/_Initial_Release</id>
-        <link href="https://keneanung.github.io/@keneanung/nexus-event-bus/blog/2021/04/11/_Initial_Release"/>
+        <link href="https://keneanung.github.io/nexus-event-bus/blog/2021/04/11/_Initial_Release"/>
         <updated>2021-04-11T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Hello World!]]></summary>
         <content type="html"><![CDATA[<p><code>Hello World!</code></p><p>And with that out of the way, I present the first release on my event bus package for the Nexus MUD client.</p><p>While there are already implementations of the event bus for the Nexus MUD client (ie as part of the NexSys and NexGUI projects), I wanted to make a package that is not part of a larger project. Instead this project can be installed individually and be used as a dependency for other projects. This should make it easier for the community to adapt a set of lightweight standard packages that still allow the users a large amount of flexibility to use the packages they like.</p><p>This release is the minimal viable product and contains the most basic functionality: Registering event handlers, raising events and unregistering event handlers. The <a href="https://keneanung.github.io/nexus-event-bus/docs/api" target="_blank" rel="noopener noreferrer">API documentation</a> has all the gritty details.</p><p>More features may be added in the future. Feel free to <a href="https://github.com/keneanung/nexus-event-bus/issues/new" target="_blank" rel="noopener noreferrer">create a new issue</a> to discuss further extnsions.</p><p>If you like my work and want to support me, please consider <a href="https://github.com/sponsors/keneanung" target="_blank" rel="noopener noreferrer">sponsoring me</a>.</p><p>Oh, and why is the initial release version <code>0.0.3</code>? Well, I messed up the packaging, so I had to redo it a few times. I'm sorry.</p>]]></content>

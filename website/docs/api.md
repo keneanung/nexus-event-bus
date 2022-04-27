@@ -4,13 +4,17 @@ id: api
 ---
 # API #
 
-## `eventBus.subscribe(event, callback)` ##
+## `eventBus.subscribe(event, callback, [callbackName], [overwrite])` ##
 
 ### Arguments ###
 
 **event**: `string` - The name of the event to subscribe to.
 
 **callback**: `async function(object): void` - The callback to call when the event is fired. The callback will retrieve the event data. It is called as a async function.
+
+**callbackName**: `string`, optional - The name of the callback. If not provided, a random name will be generated.
+
+**overwrite**: `boolean`, optional - If true, the callback will overwrite any existing callback with the same name. If false, the callback will only be added if there is no existing callback with the same name. An Error will be thrown if there is an existing callback with the same name and overwrite is false.
 
 ### Description ###
 
@@ -35,6 +39,46 @@ eventBus.subscribe("test", (data) => {
 ```
 
 ```js
+eventBus.subscribe("test", (data) => {
+    console.log("test event fired");
+    console.log(data);
+}, "myCallback");
+```
+
+```js
+const myVerySpecialFunction = (data) => {
+    console.log("test event fired");
+    console.log(data);
+}
+
+eventBus.subscribe("test", myVerySpecialFunction, myVerySpecialFunction.name);
+```
+
+```js
+eventBus.subscribe("test", (data) => {
+    console.log("test event fired");
+    console.log(data);
+}, "myCallback");
+
+eventBus.subscribe("test", (data) => {
+    console.log("test event fired");
+    console.log(data);
+}, "myCallback"); // Error
+```
+
+```js
+eventBus.subscribe("test", (data) => {
+    console.log("test event fired");
+    console.log(data);
+}, "myCallback");
+
+eventBus.subscribe("test", (data) => {
+    console.log("test event fired");
+    console.log(data);
+}, "myCallback", true); // works
+```
+
+```js
 eventBus.subscribe("sawPlayer", async (name) => {
     const response = await fetch(`https://api.achaea.com/characters/${name}.json`);
     const json = await response.json();
@@ -49,7 +93,7 @@ eventBus.subscribe("*", (data) => {
 });
 ```
 
-## `eventBus.raise(event[, data])` ##
+## `eventBus.raise(event, [data])` ##
 
 ### Arguments ###
 
@@ -84,11 +128,11 @@ eventBus.raise("sawPlayer", name);
 
 **event**: `string` - The name of the event to subscribe to.
 
-**callback**: `async function(object): void` - The callback to remove from the list of functions that are called when the event is called.
+**callback**: `async function(object): void` or `string` - The callback to remove from the list of functions that are called when the event is called. If a string is provided, it is assumed to be the name of the callback to remove instead.
 
 ### Description ###
 
-Removes the given function as a subscriber to the given event so it will not be called anymore when the event is raised. This has to be the same reference as the one given to `eventBus.subscribe`.
+Removes the given function as a subscriber to the given event so it will not be called anymore when the event is raised. This has to be the same reference as the one given to `eventBus.subscribe`. If you do not want to keep the reference around, use the name of the callback instead.
 
 To unsubscribe from the "all events" list, use the special event name `*`.
 
@@ -102,6 +146,16 @@ function testFunction(data) {
 
 eventBus.subscribe("test", testFunction);
 eventBus.unsubscribe("test", testFunction);
+```
+
+```js
+function testFunction(data) {
+    console.log("test event fired");
+    console.log(data);
+}
+
+eventBus.subscribe("test", testFunction, 'testFunction');
+eventBus.unsubscribe("test", 'testFunction');
 ```
 
 ```js
@@ -121,4 +175,33 @@ eventBus.subscribe("raceChange", (raceChangeData) => {
   eventBus.subscribe("defend", defence[raceChangeData.newRace]);
   eventBus.unsubscribe("defend", defence[raceChangeData.oldRace]);
 });
+```
+
+## `eventBus.getSubscribers(eventName)` ##
+
+### Arguments ###
+
+**eventName**: `string` - The name of the event to get the subscribers for.
+
+### Return value ###
+
+An array of objects in the form of `{callback: async function(object): void, callbackName: string}`. The callback value is the actual callback function that is registered. The callbackName is the name of the callback that was given to `eventBus.subscribe`.
+
+### Description ###
+
+Use this function to retrieve all subscribed callbacks for the given event. The returned array is a copy of the internal data, so modifying it will not affect the internal array.
+
+The array will contain the callbacks subscribed directly to the event as well as callbacks subscribed to the "all events" list.
+
+### Examples ###
+
+```js
+function testFunction(data) {
+    console.log("test event fired");
+    console.log(data);
+}
+
+eventBus.subscribe("test", testFunction);
+eventBus.getSubscribers("test");
+// returns [{callback: testFunction, callbackName: <some random string>}]
 ```

@@ -1,6 +1,18 @@
+import { v1 as uuidv1 } from 'uuid';
+
 // disable eslint for the next line as the type system does not understand our use otherwise
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint, @typescript-eslint/no-explicit-any
 declare type EventCallback<T extends any = any> = (argument: T) => Promise<void>;
+
+type NamedEventCallback = {
+  callback: EventCallback;
+  name: string;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint, @typescript-eslint/no-explicit-any
+type EventCallbackSubscriptions<T extends any = any> = {
+  [callbackName: string]: EventCallback<T>;
+};
 
 /**
  * Event bus which allows the user to subscribe to events and
@@ -12,8 +24,10 @@ export interface IEventBus {
    *
    * @param {string} eventName The name of the event to describe to. Use '*' to subscribe to all events.
    * @param {EventCallback} callback The callback to run on the given event
+   * @param {string} callbackName Optional name of the callback. If not given, a random name will be generated.
+   * @param {boolean} overwrite Optional flag to overwrite an existing callback with the same name.
    */
-  subscribe<T>(eventName: string, callback: EventCallback<T>): void;
+  subscribe<T>(eventName: string, callback: EventCallback<T>, callbackName?: string, overwrite?: boolean): void;
 
   /**
    * Raises an event in the event broker and calls all subscribed callback.
@@ -28,53 +42,69 @@ export interface IEventBus {
    * Removes the subscription of a callback from an event.
    *
    * @param {string} eventName The name of the event to remove the callback from.
-   * @param {EventCallback} callback The callback to remove.
+   * @param {EventCallback | string} callback The callback to remove or its name.
    */
-  unsubscribe<T>(eventName: string, callback: EventCallback<T>): void;
+  unsubscribe<T>(eventName: string, callback: EventCallback<T> | string): void;
 
   /**
    * Returns all the callbacks subscribed to a given event.
    *
    * @param {EventCallback} eventName The name of the event to get all subscribed events for.
-   * @returns {EventCallback[]} The list of subscribed callbacks.
+   * @returns {NamedEventCallback[]} The list of subscribed callbacks.
    */
-  getSubscribers(eventName: string): EventCallback[];
+  getSubscribers(eventName: string): NamedEventCallback[];
 }
 
 /**
  * @inheritdoc
  */
 export class EventBus implements IEventBus {
-  private subscriptions: { [eventName: string]: EventCallback[] } = {};
-  private subscriptionsToAll: EventCallback[] = [];
+  private subscriptions: { [eventName: string]: EventCallbackSubscriptions } = {};
+  private subscriptionsToAll: EventCallbackSubscriptions = {};
 
-  public subscribe<T>(eventName: string, callback: EventCallback<T>): void {
-    let eventCallbackList: EventCallback<T>[];
+  public subscribe(
+    eventName: string,
+    callback: EventCallback,
+    callbackName: string = uuidv1(),
+    overwrite = false,
+  ): void {
+    let eventCallbacks: EventCallbackSubscriptions;
+
     if (eventName === '*') {
-      eventCallbackList = this.subscriptionsToAll;
+      eventCallbacks = this.subscriptionsToAll;
     } else {
       if (this.subscriptions[eventName] === undefined) {
-        this.subscriptions[eventName] = [];
+        this.subscriptions[eventName] = {};
       }
-      eventCallbackList = this.subscriptions[eventName];
+      eventCallbacks = this.subscriptions[eventName];
     }
-    this.subscribeToEvent<T>(eventCallbackList, callback);
+    this.subscribeToEvent(eventCallbacks, callback, eventName, callbackName, overwrite);
   }
 
-  private subscribeToEvent<T>(eventCallbackList: EventCallback<T>[], callback: EventCallback<T>) {
-    eventCallbackList.push(callback);
+  private subscribeToEvent(
+    eventCallbacks: EventCallbackSubscriptions,
+    callback: EventCallback,
+    eventName: string,
+    callbackName: string,
+    overwrite: boolean,
+  ) {
+    if (eventCallbacks[callbackName] !== undefined && !overwrite) {
+      throw new Error(`Callback "${callbackName}" already exists for event "${eventName}"`);
+    }
+    eventCallbacks[callbackName] = callback;
   }
 
   public async raise<T>(eventName: string, eventArgument: T) {
     const subscriptions = this.subscriptions[eventName];
+
     this.runCallbacks<T>(subscriptions, eventArgument);
 
     this.runCallbacks<T>(this.subscriptionsToAll, eventArgument);
   }
 
-  private runCallbacks<T>(subscriptions: EventCallback<T>[], eventArgument: T) {
+  private runCallbacks<T>(subscriptions: EventCallbackSubscriptions, eventArgument: T) {
     if (subscriptions !== undefined) {
-      subscriptions.forEach(async (callback) => {
+      Object.values(subscriptions).forEach(async (callback) => {
         try {
           await callback(eventArgument);
         } catch (e: unknown) {
@@ -84,8 +114,8 @@ export class EventBus implements IEventBus {
     }
   }
 
-  public unsubscribe<T>(eventName: string, callback: EventCallback<T>) {
-    let subscriptions: EventCallback<T>[];
+  public unsubscribe(eventName: string, callback: EventCallback | string) {
+    let subscriptions: EventCallbackSubscriptions;
     if (eventName === '*') {
       subscriptions = this.subscriptionsToAll;
     } else {
@@ -97,15 +127,38 @@ export class EventBus implements IEventBus {
     this.unsubscribeFromEvent(subscriptions, callback);
   }
 
-  private unsubscribeFromEvent<T>(eventCallbackList: EventCallback<T>[], callback: EventCallback<T>) {
-    const index = eventCallbackList.indexOf(callback, 0);
-    if (index > -1) {
-      eventCallbackList.splice(index, 1);
+  private unsubscribeFromEvent(eventCallbackList: EventCallbackSubscriptions, callback: EventCallback | string) {
+    if (typeof callback === 'string') {
+      delete eventCallbackList[callback];
+    } else {
+      const keys = Object.keys(eventCallbackList);
+      for (const key of keys) {
+        if (eventCallbackList[key] === callback) {
+          delete eventCallbackList[key];
+        }
+      }
     }
   }
 
-  public getSubscribers(eventName: string): EventCallback[] {
-    const result = this.subscriptions[eventName] || [];
-    return result.concat(this.subscriptionsToAll);
+  public getSubscribers(eventName: string): NamedEventCallback[] {
+    const result: NamedEventCallback[] = [];
+
+    const collectSubscribers = (key: string, subscriptions: EventCallbackSubscriptions) => {
+      result.push({
+        callback: subscriptions[key],
+        name: key,
+      });
+    };
+
+    if (eventName !== '*') {
+      const subscriptions = this.subscriptions[eventName];
+      if (subscriptions !== undefined) {
+        Object.keys(subscriptions).forEach((value) => collectSubscribers(value, subscriptions));
+      }
+    }
+
+    Object.keys(this.subscriptionsToAll).forEach((value) => collectSubscribers(value, this.subscriptionsToAll));
+
+    return result;
   }
 }

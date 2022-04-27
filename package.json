@@ -50,5 +50,9 @@
     "lib/**/*",
     "!lib/**/__tests__/*",
     "!lib/webpack/**/*"
-  ]
+  ],
+  "dependencies": {
+    "@types/uuid": "^8.3.4",
+    "uuid": "^8.3.2"
+  }
 }

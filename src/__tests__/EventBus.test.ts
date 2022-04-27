@@ -97,7 +97,13 @@ test('Return all registered subscribers to an event', () => {
 
   bus.subscribe('TestEvent', callback);
 
-  expect(bus.getSubscribers('TestEvent')).toContain(callback);
+  expect(bus.getSubscribers('TestEvent')).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        callback,
+      }),
+    ]),
+  );
 });
 
 test('Return all registered subscribers to all events', () => {
@@ -106,7 +112,13 @@ test('Return all registered subscribers to all events', () => {
 
   bus.subscribe('*', callback);
 
-  expect(bus.getSubscribers('TestEvent')).toContain(callback);
+  expect(bus.getSubscribers('TestEvent')).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        callback,
+      }),
+    ]),
+  );
 });
 
 test('Return empty array when no subscribers are registered', () => {
@@ -124,8 +136,20 @@ test('Return subscribers to a given event and subscriber to all events', () => {
   bus.subscribe('TestEvent', callback2);
 
   const subscribers = bus.getSubscribers('TestEvent');
-  expect(subscribers).toContain(callback1);
-  expect(subscribers).toContain(callback2);
+  expect(subscribers).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        callback: callback1,
+      }),
+    ]),
+  );
+  expect(subscribers).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        callback: callback2,
+      }),
+    ]),
+  );
 });
 
 test('Return subscribers to all events', () => {
@@ -134,5 +158,57 @@ test('Return subscribers to all events', () => {
 
   bus.subscribe('*', callback);
 
-  expect(bus.getSubscribers('*')).toContain(callback);
+  expect(bus.getSubscribers('*')).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        callback,
+      }),
+    ]),
+  );
+});
+
+test('Unsubscribe subscriber by name', () => {
+  const bus = new EventBus();
+  const callback = jest.fn();
+
+  bus.subscribe('*', callback, 'my callback');
+  bus.unsubscribe('*', 'my callback');
+
+  expect(bus.getSubscribers('*')).not.toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        callback,
+      }),
+    ]),
+  );
+});
+
+test('Disallow multiple subscribers to the same event with the same name', () => {
+  const bus = new EventBus();
+  const callback = jest.fn();
+
+  bus.subscribe('*', callback, 'my callback');
+  expect(() => bus.subscribe('*', callback, 'my callback')).toThrow(
+    'Callback "my callback" already exists for event "*"',
+  );
+});
+
+test('Allow multiple subscribers to the same event with different names', () => {
+  const bus = new EventBus();
+  const callback = jest.fn();
+
+  bus.subscribe('*', callback, 'my callback');
+  bus.subscribe('*', callback, 'my callback 2');
+
+  expect(bus.getSubscribers('*')).toHaveLength(2);
+});
+
+test('Overwrite existing subscriber with the same name if enabled', () => {
+  const bus = new EventBus();
+  const callback = jest.fn();
+
+  bus.subscribe('*', callback, 'my callback');
+  bus.subscribe('*', callback, 'my callback', true);
+
+  expect(bus.getSubscribers('*')).toHaveLength(1);
 });

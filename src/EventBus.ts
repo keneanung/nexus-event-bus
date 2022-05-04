@@ -59,10 +59,10 @@ export interface IEventBus {
 const createRandomHexArray = () => {
   const array = new Uint8Array(16);
   for (let index = 0; index < array.length; index++) {
-    array[index] = Math.floor(Math.random() * 0xFF)
+    array[index] = Math.floor(Math.random() * 0xff);
   }
   return array;
-}
+};
 
 /**
  * @inheritdoc

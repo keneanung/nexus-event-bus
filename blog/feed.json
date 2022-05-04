@@ -5,12 +5,12 @@
     "description": "Iron Realms Nexus Event Bus Blog",
     "items": [
         {
-            "id": "/2021/04/27/_Khassems_Wishlist",
-            "content_html": "<p>This release is something, the Achaean Player Khaseem wished for. He's been using the original EventStream module of NexSys very extenively. However, he'd like to move to an external package to help the adoption of a standard set of Nexus packages.</p><p>The original EventStream had a set of features that were part of his development flow: The ability to unsubscribe from events using a function name and access to the list of subscribers to an event.</p><p>While the former is about a preferred coding style, the latter is useful for debugging code: That way you can easily have a look at the list of subscribers to an event and determine if all subscribers actually belong there at this point.</p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"new-features\">New Features<a class=\"hash-link\" href=\"#new-features\" title=\"Direct link to heading\">​</a></h2><p>You may now subscribe or unsubscribe to events using a callback function name instead of a function reference. To avoid accidental overwriting of existing callbacks, especially between different users of the EventBus, duplicate subscription names generate an error. So you may want to namespace your event names.</p><p>You can now access the list of subscribers to an event using the <code>getSubscribers</code> method. This allows easy inspection of the subscription state of callbacks. The subscribers may not be changed this way.</p>",
-            "url": "https://keneanung.github.io/nexus-event-bus/blog/2021/04/27/_Khassems_Wishlist",
-            "title": "Khasseems Wishlist: v0.1.1",
-            "summary": "This release is something, the Achaean Player Khaseem wished for. He's been using the original EventStream module of NexSys very extenively. However, he'd like to move to an external package to help the adoption of a standard set of Nexus packages.",
-            "date_modified": "2021-04-27T00:00:00.000Z",
+            "id": "/2022/05/04/_Fix_random_values",
+            "content_html": "<p>The new Nexus client will be available on multiple platforms, using React Native. During testing, people noticed that the Web API for generating cryptographically secure random numbers are not available and thus the UUID package we depend on was unable to load.</p><p>A proper polyfill is curently impossible as we can not ship Java modules in Nexus packages. Luckily, the UUID package allows to supply a cusom function for generating the required random values. As a workaround, this functionality was used in connection with Math.random to supply the needed information.</p><p>That means however, that our UUIDs are not as random as they usually are. But for our use case of generating random names, this should be good enough.</p>",
+            "url": "https://keneanung.github.io/nexus-event-bus/blog/2022/05/04/_Fix_random_values",
+            "title": "Random Values: v0.2.0",
+            "summary": "The new Nexus client will be available on multiple platforms, using React Native. During testing, people noticed that the Web API for generating cryptographically secure random numbers are not available and thus the UUID package we depend on was unable to load.",
+            "date_modified": "2022-05-04T00:00:00.000Z",
             "author": {
                 "name": "keneanung",
                 "url": "https://github.com/keneanung"
@@ -18,12 +18,25 @@
             "tags": []
         },
         {
-            "id": "/2021/04/11/_Initial_Release",
+            "id": "/2022/04/27/_Khaseems_Wishlist",
+            "content_html": "<p>This release is something, the Achaean Player Khaseem wished for. He's been using the original EventStream module of NexSys very extenively. However, he'd like to move to an external package to help the adoption of a standard set of Nexus packages.</p><p>The original EventStream had a set of features that were part of his development flow: The ability to unsubscribe from events using a function name and access to the list of subscribers to an event.</p><p>While the former is about a preferred coding style, the latter is useful for debugging code: That way you can easily have a look at the list of subscribers to an event and determine if all subscribers actually belong there at this point.</p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"new-features\">New Features<a class=\"hash-link\" href=\"#new-features\" title=\"Direct link to heading\">​</a></h2><p>You may now subscribe or unsubscribe to events using a callback function name instead of a function reference. To avoid accidental overwriting of existing callbacks, especially between different users of the EventBus, duplicate subscription names generate an error. So you may want to namespace your event names.</p><p>You can now access the list of subscribers to an event using the <code>getSubscribers</code> method. This allows easy inspection of the subscription state of callbacks. The subscribers may not be changed this way.</p>",
+            "url": "https://keneanung.github.io/nexus-event-bus/blog/2022/04/27/_Khaseems_Wishlist",
+            "title": "Khaseems Wishlist: v0.1.1",
+            "summary": "This release is something, the Achaean Player Khaseem wished for. He's been using the original EventStream module of NexSys very extenively. However, he'd like to move to an external package to help the adoption of a standard set of Nexus packages.",
+            "date_modified": "2022-04-27T00:00:00.000Z",
+            "author": {
+                "name": "keneanung",
+                "url": "https://github.com/keneanung"
+            },
+            "tags": []
+        },
+        {
+            "id": "/2022/04/11/_Initial_Release",
             "content_html": "<p><code>Hello World!</code></p><p>And with that out of the way, I present the first release on my event bus package for the Nexus MUD client.</p><p>While there are already implementations of the event bus for the Nexus MUD client (ie as part of the NexSys and NexGUI projects), I wanted to make a package that is not part of a larger project. Instead this project can be installed individually and be used as a dependency for other projects. This should make it easier for the community to adapt a set of lightweight standard packages that still allow the users a large amount of flexibility to use the packages they like.</p><p>This release is the minimal viable product and contains the most basic functionality: Registering event handlers, raising events and unregistering event handlers. The <a href=\"https://keneanung.github.io/nexus-event-bus/docs/api\" target=\"_blank\" rel=\"noopener noreferrer\">API documentation</a> has all the gritty details.</p><p>More features may be added in the future. Feel free to <a href=\"https://github.com/keneanung/nexus-event-bus/issues/new\" target=\"_blank\" rel=\"noopener noreferrer\">create a new issue</a> to discuss further extnsions.</p><p>If you like my work and want to support me, please consider <a href=\"https://github.com/sponsors/keneanung\" target=\"_blank\" rel=\"noopener noreferrer\">sponsoring me</a>.</p><p>Oh, and why is the initial release version <code>0.0.3</code>? Well, I messed up the packaging, so I had to redo it a few times. I'm sorry.</p>",
-            "url": "https://keneanung.github.io/nexus-event-bus/blog/2021/04/11/_Initial_Release",
+            "url": "https://keneanung.github.io/nexus-event-bus/blog/2022/04/11/_Initial_Release",
             "title": "Initial Release v0.0.3",
             "summary": "Hello World!",
-            "date_modified": "2021-04-11T00:00:00.000Z",
+            "date_modified": "2022-04-11T00:00:00.000Z",
             "author": {
                 "name": "keneanung",
                 "url": "https://github.com/keneanung"

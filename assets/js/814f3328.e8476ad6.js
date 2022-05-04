@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[535],{5641:function(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Khasseems Wishlist: v0.1.1","permalink":"/nexus-event-bus/blog/2021/04/27/_Khassems_Wishlist"},{"title":"Initial Release v0.0.3","permalink":"/nexus-event-bus/blog/2021/04/11/_Initial_Release"}]}')}}]);

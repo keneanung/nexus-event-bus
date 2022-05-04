@@ -1,4 +1,4 @@
-import { v1 as uuidv1 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 // disable eslint for the next line as the type system does not understand our use otherwise
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint, @typescript-eslint/no-explicit-any
@@ -55,6 +55,15 @@ export interface IEventBus {
   getSubscribers(eventName: string): NamedEventCallback[];
 }
 
+// Does NOT create a secure random array, but it's good enough for our use case.
+const createRandomHexArray = () => {
+  const array = new Uint8Array(16);
+  for (let index = 0; index < array.length; index++) {
+    array[index] = Math.floor(Math.random() * 0xFF)
+  }
+  return array;
+}
+
 /**
  * @inheritdoc
  */
@@ -65,7 +74,7 @@ export class EventBus implements IEventBus {
   public subscribe(
     eventName: string,
     callback: EventCallback,
-    callbackName: string = uuidv1(),
+    callbackName: string = uuidv4({ rng: createRandomHexArray }),
     overwrite = false,
   ): void {
     let eventCallbacks: EventCallbackSubscriptions;

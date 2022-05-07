@@ -10,9 +10,7 @@ type NamedEventCallback = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint, @typescript-eslint/no-explicit-any
-type EventCallbackSubscriptions<T extends any = any> = {
-  [callbackName: string]: EventCallback<T>;
-};
+type EventCallbackSubscriptions<T extends any = any> = Map<string, EventCallback<T>>;
 
 /**
  * Event bus which allows the user to subscribe to events and
@@ -69,7 +67,7 @@ const createRandomHexArray = () => {
  */
 export class EventBus implements IEventBus {
   private subscriptions: { [eventName: string]: EventCallbackSubscriptions } = {};
-  private subscriptionsToAll: EventCallbackSubscriptions = {};
+  private subscriptionsToAll: EventCallbackSubscriptions = new Map<string, EventCallback>();
 
   public subscribe(
     eventName: string,
@@ -83,7 +81,7 @@ export class EventBus implements IEventBus {
       eventCallbacks = this.subscriptionsToAll;
     } else {
       if (this.subscriptions[eventName] === undefined) {
-        this.subscriptions[eventName] = {};
+        this.subscriptions[eventName] = new Map<string, EventCallback>();
       }
       eventCallbacks = this.subscriptions[eventName];
     }
@@ -97,29 +95,30 @@ export class EventBus implements IEventBus {
     callbackName: string,
     overwrite: boolean,
   ) {
-    if (eventCallbacks[callbackName] !== undefined && !overwrite) {
+    if (eventCallbacks.has(callbackName) && !overwrite) {
       throw new Error(`Callback "${callbackName}" already exists for event "${eventName}"`);
     }
-    eventCallbacks[callbackName] = callback;
+    eventCallbacks.set(callbackName, callback);
   }
 
   public async raise<T>(eventName: string, eventArgument: T) {
     const subscriptions = this.subscriptions[eventName];
 
-    this.runCallbacks<T>(subscriptions, eventArgument);
+    await this.runCallbacks<T>(subscriptions, eventArgument);
 
-    this.runCallbacks<T>(this.subscriptionsToAll, eventArgument);
+    await this.runCallbacks<T>(this.subscriptionsToAll, eventArgument);
   }
 
-  private runCallbacks<T>(subscriptions: EventCallbackSubscriptions, eventArgument: T) {
+  private async runCallbacks<T>(subscriptions: EventCallbackSubscriptions, eventArgument: T) {
     if (subscriptions !== undefined) {
-      Object.values(subscriptions).forEach(async (callback) => {
+      const callbacks = subscriptions.values();
+      for (const callback of Array.from(callbacks)) {
         try {
           await callback(eventArgument);
         } catch (e: unknown) {
           console.error(e);
         }
-      });
+      };
     }
   }
 
@@ -138,12 +137,12 @@ export class EventBus implements IEventBus {
 
   private unsubscribeFromEvent(eventCallbackList: EventCallbackSubscriptions, callback: EventCallback | string) {
     if (typeof callback === 'string') {
-      delete eventCallbackList[callback];
+      eventCallbackList.delete(callback);
     } else {
-      const keys = Object.keys(eventCallbackList);
-      for (const key of keys) {
-        if (eventCallbackList[key] === callback) {
-          delete eventCallbackList[key];
+      const keys = eventCallbackList.keys();
+      for (const key of Array.from(keys)) {
+        if (eventCallbackList.get(key) === callback) {
+          eventCallbackList.delete(key);
         }
       }
     }
@@ -153,20 +152,23 @@ export class EventBus implements IEventBus {
     const result: NamedEventCallback[] = [];
 
     const collectSubscribers = (key: string, subscriptions: EventCallbackSubscriptions) => {
-      result.push({
-        callback: subscriptions[key],
-        name: key,
-      });
+      const subscription = subscriptions.get(key);
+      if (subscription !== undefined) {
+        result.push({
+          callback: subscription,
+          name: key,
+        });
+      }
     };
 
     if (eventName !== '*') {
       const subscriptions = this.subscriptions[eventName];
       if (subscriptions !== undefined) {
-        Object.keys(subscriptions).forEach((value) => collectSubscribers(value, subscriptions));
+        subscriptions.forEach((_, value) => collectSubscribers(value, subscriptions));
       }
     }
 
-    Object.keys(this.subscriptionsToAll).forEach((value) => collectSubscribers(value, this.subscriptionsToAll));
+    this.subscriptionsToAll.forEach((_, value) => collectSubscribers(value, this.subscriptionsToAll));
 
     return result;
   }

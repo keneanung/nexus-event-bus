@@ -15,7 +15,7 @@
     "@typescript-eslint/experimental-utils": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
     "acorn": "^8.7.1",
-    "eslint": "^8.14.0",
+    "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^26.1.5",
     "eslint-plugin-jsdoc": "^39.2.9",

@@ -1,5 +1,6 @@
 const path = require('path');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const WebpackAutoInject = require('webpack-auto-inject-version-next');
 const configData = require('./config.js');
 
 module.exports = {
@@ -25,7 +26,15 @@ module.exports = {
       export: "default"
     }
   },
-  plugins: [new ESLintPlugin({
-    extensions: [ '.tsx', '.ts', '.js', '.jsx' ]
-  })],
+  plugins: [
+    new ESLintPlugin({
+      extensions: [ '.tsx', '.ts', '.js', '.jsx' ]
+    }),
+    new WebpackAutoInject({
+      components: {
+          AutoIncreaseVersion: false,
+          InjectAsComment: false,
+      }
+  })
+  ],
 };

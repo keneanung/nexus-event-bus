@@ -3,7 +3,7 @@
 
 import { EventBus } from "../src/index"
 
-console.log('loading event bus...')
+console.log('loading event bus version [AIV]{version}[/AIV]...')
 
 const eventBus = new EventBus();
 

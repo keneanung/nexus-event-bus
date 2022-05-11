@@ -11,5 +11,7 @@ items:
   - type: function
     enabled: true
     name: onGMCP
-    code: eventBus.raise('onGMCP', args);
+    code: |
+      eventBus.raise('onGMCP', args);
+      eventBus.raise(args.gmcp_method, args.gmcp_args);
 

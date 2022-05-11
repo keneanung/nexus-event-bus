@@ -5,8 +5,21 @@
     "description": "Iron Realms Nexus Event Bus Blog",
     "items": [
         {
+            "id": "/2022/05/11/_Finetuning",
+            "content_html": "<p>This release contains a number of small bits and bops here and there to finetune the package and give it some extra shine:</p><ul><li>Fix a possible security issue due to <a href=\"https://portswigger.net/daily-swig/prototype-pollution-the-dangerous-and-underrated-vulnerability-impacting-javascript-applications\" target=\"_blank\" rel=\"noopener noreferrer\">prototype polution</a></li><li>Inject version number into loading log message</li><li>Add hack to get the Map class back</li><li>Move raising specialized gmcp events to the NXS package for improved visibility and document them</li></ul>",
+            "url": "https://keneanung.github.io/nexus-event-bus/blog/2022/05/11/_Finetuning",
+            "title": "Finetuning: v0.3.0",
+            "summary": "This release contains a number of small bits and bops here and there to finetune the package and give it some extra shine:",
+            "date_modified": "2022-05-11T00:00:00.000Z",
+            "author": {
+                "name": "keneanung",
+                "url": "https://github.com/keneanung"
+            },
+            "tags": []
+        },
+        {
             "id": "/2022/05/04/_Fix_random_values",
-            "content_html": "<p>The new Nexus client will be available on multiple platforms, using React Native. During testing, people noticed that the Web API for generating cryptographically secure random numbers are not available and thus the UUID package we depend on was unable to load.</p><p>A proper polyfill is curently impossible as we can not ship Java modules in Nexus packages. Luckily, the UUID package allows to supply a cusom function for generating the required random values. As a workaround, this functionality was used in connection with Math.random to supply the needed information.</p><p>That means however, that our UUIDs are not as random as they usually are. But for our use case of generating random names, this should be good enough.</p>",
+            "content_html": "<p>The new Nexus client will be available on multiple platforms, using React Native. During testing, people noticed that the Web API for generating cryptographically secure random numbers are not available and thus the UUID package we depend on was unable to load.</p><p>A proper polyfill is curently impossible as we can not ship Java modules in Nexus packages. Luckily, the UUID package allows to supply a custom function for generating the required random values. As a workaround, this functionality was used in connection with Math.random to supply the needed information.</p><p>That means however, that our UUIDs are not as random as they usually are. But for our use case of generating random names, this should be good enough.</p>",
             "url": "https://keneanung.github.io/nexus-event-bus/blog/2022/05/04/_Fix_random_values",
             "title": "Random Values: v0.2.0",
             "summary": "The new Nexus client will be available on multiple platforms, using React Native. During testing, people noticed that the Web API for generating cryptographically secure random numbers are not available and thus the UUID package we depend on was unable to load.",

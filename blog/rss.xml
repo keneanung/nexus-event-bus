@@ -4,18 +4,27 @@
         <title>Iron Realms Nexus Event Bus Blog</title>
         <link>https://keneanung.github.io/nexus-event-bus/blog</link>
         <description>Iron Realms Nexus Event Bus Blog</description>
-        <lastBuildDate>Wed, 04 May 2022 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 11 May 2022 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>Copyright © 2022 keneanung</copyright>
+        <item>
+            <title><![CDATA[Finetuning: v0.3.0]]></title>
+            <link>https://keneanung.github.io/nexus-event-bus/blog/2022/05/11/_Finetuning</link>
+            <guid>/2022/05/11/_Finetuning</guid>
+            <pubDate>Wed, 11 May 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[This release contains a number of small bits and bops here and there to finetune the package and give it some extra shine:]]></description>
+            <content:encoded><![CDATA[<p>This release contains a number of small bits and bops here and there to finetune the package and give it some extra shine:</p><ul><li>Fix a possible security issue due to <a href="https://portswigger.net/daily-swig/prototype-pollution-the-dangerous-and-underrated-vulnerability-impacting-javascript-applications" target="_blank" rel="noopener noreferrer">prototype polution</a></li><li>Inject version number into loading log message</li><li>Add hack to get the Map class back</li><li>Move raising specialized gmcp events to the NXS package for improved visibility and document them</li></ul>]]></content:encoded>
+            <author>keneanung@gmail.com (keneanung)</author>
+        </item>
         <item>
             <title><![CDATA[Random Values: v0.2.0]]></title>
             <link>https://keneanung.github.io/nexus-event-bus/blog/2022/05/04/_Fix_random_values</link>
             <guid>/2022/05/04/_Fix_random_values</guid>
             <pubDate>Wed, 04 May 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[The new Nexus client will be available on multiple platforms, using React Native. During testing, people noticed that the Web API for generating cryptographically secure random numbers are not available and thus the UUID package we depend on was unable to load.]]></description>
-            <content:encoded><![CDATA[<p>The new Nexus client will be available on multiple platforms, using React Native. During testing, people noticed that the Web API for generating cryptographically secure random numbers are not available and thus the UUID package we depend on was unable to load.</p><p>A proper polyfill is curently impossible as we can not ship Java modules in Nexus packages. Luckily, the UUID package allows to supply a cusom function for generating the required random values. As a workaround, this functionality was used in connection with Math.random to supply the needed information.</p><p>That means however, that our UUIDs are not as random as they usually are. But for our use case of generating random names, this should be good enough.</p>]]></content:encoded>
+            <content:encoded><![CDATA[<p>The new Nexus client will be available on multiple platforms, using React Native. During testing, people noticed that the Web API for generating cryptographically secure random numbers are not available and thus the UUID package we depend on was unable to load.</p><p>A proper polyfill is curently impossible as we can not ship Java modules in Nexus packages. Luckily, the UUID package allows to supply a custom function for generating the required random values. As a workaround, this functionality was used in connection with Math.random to supply the needed information.</p><p>That means however, that our UUIDs are not as random as they usually are. But for our use case of generating random names, this should be good enough.</p>]]></content:encoded>
             <author>keneanung@gmail.com (keneanung)</author>
         </item>
         <item>

@@ -5,6 +5,17 @@ import { EventBus } from "../src/index"
 
 console.log('loading event bus version [AIV]{version}[/AIV]...')
 
+if(typeof(Map) !== 'function') {
+    const frame = document.createElement('iframe')
+    const tab = document.getElementById('tab_content_main_output')
+    tab?.appendChild(frame)
+    //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    // eslint-disable-next-line no-global-assign
+    Map = frame.contentWindow.Map
+    tab?.removeChild(frame)
+}
+
 const eventBus = new EventBus();
 
 eventBus.subscribe('onGMCP', async (argument: {gmcp_method: string, gmcp_args: unknown}) => {

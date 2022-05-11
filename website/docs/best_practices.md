@@ -1,6 +1,6 @@
 ---
 id: best_practices
-sidebar_position: 5
+sidebar_position: 6
 ---
 # Best Practices #
 

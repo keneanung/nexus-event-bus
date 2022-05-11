@@ -118,7 +118,7 @@ export class EventBus implements IEventBus {
         } catch (e: unknown) {
           console.error(e);
         }
-      };
+      }
     }
   }
 

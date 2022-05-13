@@ -112,7 +112,7 @@ export class EventBus implements IEventBus {
   private async runCallbacks<T>(subscriptions: EventCallbackSubscriptions, eventArgument: T) {
     if (subscriptions !== undefined) {
       const callbacks = subscriptions.values();
-      for (const callback of Array.from(callbacks)) {
+      for (const callback of callbacks) {
         try {
           await callback(eventArgument);
         } catch (e: unknown) {
@@ -140,7 +140,7 @@ export class EventBus implements IEventBus {
       eventCallbackList.delete(callback);
     } else {
       const keys = eventCallbackList.keys();
-      for (const key of Array.from(keys)) {
+      for (const key of keys) {
         if (eventCallbackList.get(key) === callback) {
           eventCallbackList.delete(key);
         }
@@ -151,24 +151,25 @@ export class EventBus implements IEventBus {
   public getSubscribers(eventName: string): NamedEventCallback[] {
     const result: NamedEventCallback[] = [];
 
-    const collectSubscribers = (key: string, subscriptions: EventCallbackSubscriptions) => {
-      const subscription = subscriptions.get(key);
-      if (subscription !== undefined) {
-        result.push({
-          callback: subscription,
-          name: key,
-        });
-      }
+    const collectSubscribers = (name: string, callback: EventCallback) => {
+      result.push({
+        callback,
+        name,
+      });
     };
 
     if (eventName !== '*') {
       const subscriptions = this.subscriptions[eventName];
       if (subscriptions !== undefined) {
-        subscriptions.forEach((_, value) => collectSubscribers(value, subscriptions));
+        for (const [subscriptionName, callback] of subscriptions) {
+          collectSubscribers(subscriptionName, callback);
+        }
       }
     }
 
-    this.subscriptionsToAll.forEach((_, value) => collectSubscribers(value, this.subscriptionsToAll));
+    for (const [subscriptionName, callback] of this.subscriptionsToAll) {
+      collectSubscribers(subscriptionName, callback);
+    }
 
     return result;
   }

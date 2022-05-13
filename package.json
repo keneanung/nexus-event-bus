@@ -7,6 +7,8 @@
   "repository": "git://github.com/keneanung/nexus-event-bus.git",
   "main": "lib/index.js",
   "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
     "@keneanung/iron-realms-nexus-typings": "^0.2.0",
     "@keneanung/nexus-package-builder": "^1.1.0",
     "@types/jest": "^27.5.0",
@@ -15,6 +17,8 @@
     "@typescript-eslint/experimental-utils": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
     "acorn": "^8.7.1",
+    "babel-loader": "^8.2.5",
+    "core-js": "^3.22.5",
     "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^26.1.5",

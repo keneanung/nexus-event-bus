@@ -14,17 +14,24 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: [
-                ["@babel/preset-env",
+                [
+                  '@babel/preset-env',
                   {
-                    "useBuiltIns": "usage",
-                    "corejs": 3
-                  }
-                ]
+                    useBuiltIns: 'usage',
+                    corejs: 3,
+                  },
+                ],
+                ['module:metro-react-native-babel-preset'],
               ],
-              plugins: ["@babel/plugin-transform-modules-commonjs"]
-            }
+              plugins: [
+                '@babel/plugin-transform-modules-commonjs',
+                'react-native-web',
+                ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
+                ['@babel/plugin-proposal-private-methods', { loose: true }],
+              ],
+            },
           },
-          'ts-loader'
+          'ts-loader',
         ],
         exclude: /node_modules/,
       },
@@ -36,21 +43,21 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'nxs'),
-    library : {
-      type: "global",
+    library: {
+      type: 'global',
       name: configData.libraryName,
-      export: "default"
-    }
+      export: 'default',
+    },
   },
   plugins: [
     new ESLintPlugin({
-      extensions: [ '.tsx', '.ts', '.js', '.jsx' ]
+      extensions: ['.tsx', '.ts', '.js', '.jsx'],
     }),
     new WebpackAutoInject({
       components: {
-          AutoIncreaseVersion: false,
-          InjectAsComment: false,
-      }
-  })
+        AutoIncreaseVersion: false,
+        InjectAsComment: false,
+      },
+    }),
   ],
 };

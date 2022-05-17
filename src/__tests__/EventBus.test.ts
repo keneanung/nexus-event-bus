@@ -37,14 +37,11 @@ test('Allow all callbacks to run on error', async () => {
   });
   const callback = jest.fn();
   bus.subscribe('TestEvent', callback);
-  const originalError = console.error;
-  // replace the error function to avoid having something on STDERR
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  console.error = () => {};
+  const mock = jest.spyOn(console, 'error').mockImplementation();
 
   await bus.raise('TestEvent', undefined);
 
-  console.error = originalError;
+  mock.mockRestore();
   expect(callback).toBeCalledTimes(1);
 });
 
@@ -60,23 +57,24 @@ test('Allow to unsubscribe from events', async () => {
   expect(callback).toBeCalledTimes(1);
 });
 
-// eslint-disable-next-line jest/expect-expect
 test('Allow to unsubscribe from events we never subscribed to', async () => {
   const bus = new EventBus();
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  bus.unsubscribe('TestEvent', async () => {});
+  bus.unsubscribe('TestEvent', jest.fn());
+
+  expect(bus.getSubscribers('TestEvent')).toEqual([]);
 });
 
-// eslint-disable-next-line jest/expect-expect
 test('Allow to unsubscribe from events we never subscribed to, but which has other subscritions', async () => {
   const bus = new EventBus();
 
   bus.subscribe('TestEvent', async () => {
     console.log('hey');
   });
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  bus.unsubscribe('TestEvent', async () => {});
+
+  bus.unsubscribe('TestEvent', jest.fn());
+
+  expect(bus.getSubscribers('TestEvent')).toHaveLength(1);
 });
 
 test('Allow to unsubscribe from all events', async () => {
@@ -211,4 +209,40 @@ test('Overwrite existing subscriber with the same name if enabled', () => {
   bus.subscribe('*', callback, 'my callback', true);
 
   expect(bus.getSubscribers('*')).toHaveLength(1);
+});
+
+test('Output name of callback to console on error', async () => {
+  const bus = new EventBus();
+  const callback = async () => {throw new Error()};
+  bus.subscribe('*', callback, 'my callback');
+  const mock = jest.spyOn(console, 'error').mockImplementation();
+
+  await bus.raise('TestEvent', undefined);
+
+  expect(mock).toBeCalledWith(expect.stringContaining('my callback'), expect.anything());
+  mock.mockRestore();
+});
+
+test('Output name of event to console on error', async () => {
+  const bus = new EventBus();
+  const callback = async () => {throw new Error()};
+  bus.subscribe('*', callback, 'my callback');
+  const mock = jest.spyOn(console, 'error').mockImplementation();
+
+  await bus.raise('TestEvent', undefined);
+
+  expect(mock).toBeCalledWith(expect.stringContaining('TestEvent'), expect.anything());
+  mock.mockRestore();
+});
+
+test('Output thrown error to console on error', async () => {
+  const bus = new EventBus();
+  const callback = async () => {throw new Error('test error')};
+  bus.subscribe('*', callback, 'my callback');
+  const mock = jest.spyOn(console, 'error').mockImplementation();
+
+  await bus.raise('TestEvent', undefined);
+
+  expect(mock).toBeCalledWith(expect.any(String), new Error('test error'));
+  mock.mockRestore();
 });

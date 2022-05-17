@@ -66,7 +66,7 @@ const createRandomHexArray = () => {
  * @inheritdoc
  */
 export class EventBus implements IEventBus {
-  private subscriptions: { [eventName: string]: EventCallbackSubscriptions } = {};
+  private subscriptions: Map<string, EventCallbackSubscriptions> = new Map<string, EventCallbackSubscriptions>();
   private subscriptionsToAll: EventCallbackSubscriptions = new Map<string, EventCallback>();
 
   public subscribe(
@@ -80,10 +80,15 @@ export class EventBus implements IEventBus {
     if (eventName === '*') {
       eventCallbacks = this.subscriptionsToAll;
     } else {
-      if (this.subscriptions[eventName] === undefined) {
-        this.subscriptions[eventName] = new Map<string, EventCallback>();
+      if (this.subscriptions.has(eventName) === false) {
+        const subscriptions = new Map<string, EventCallback>();
+        this.subscriptions.set(eventName, subscriptions);
+        eventCallbacks = subscriptions;
+      } else {
+        // We already check for existence of the event name in the map, so we are sure it exists.
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        eventCallbacks = this.subscriptions.get(eventName)!;
       }
-      eventCallbacks = this.subscriptions[eventName];
     }
     this.subscribeToEvent(eventCallbacks, callback, eventName, callbackName, overwrite);
   }
@@ -102,14 +107,14 @@ export class EventBus implements IEventBus {
   }
 
   public async raise<T>(eventName: string, eventArgument: T) {
-    const subscriptions = this.subscriptions[eventName];
+    const subscriptions = this.subscriptions.get(eventName);
 
     await this.runCallbacks<T>(subscriptions, eventArgument, eventName);
 
     await this.runCallbacks<T>(this.subscriptionsToAll, eventArgument, eventName);
   }
 
-  private async runCallbacks<T>(subscriptions: EventCallbackSubscriptions, eventArgument: T, eventName: string) {
+  private async runCallbacks<T>(subscriptions: EventCallbackSubscriptions | undefined, eventArgument: T, eventName: string) {
     if (subscriptions !== undefined) {
       for (const [name, callback] of subscriptions) {
         try {
@@ -126,10 +131,12 @@ export class EventBus implements IEventBus {
     if (eventName === '*') {
       subscriptions = this.subscriptionsToAll;
     } else {
-      if (this.subscriptions[eventName] === undefined) {
+      if (this.subscriptions.has(eventName) === false) {
         return;
       }
-      subscriptions = this.subscriptions[eventName];
+      // there is an early return above in case the event name does not exist
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      subscriptions = this.subscriptions.get(eventName)!;
     }
     this.unsubscribeFromEvent(subscriptions, callback);
   }
@@ -158,7 +165,7 @@ export class EventBus implements IEventBus {
     };
 
     if (eventName !== '*') {
-      const subscriptions = this.subscriptions[eventName];
+      const subscriptions = this.subscriptions.get(eventName);
       if (subscriptions !== undefined) {
         for (const [subscriptionName, callback] of subscriptions) {
           collectSubscribers(subscriptionName, callback);

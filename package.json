@@ -8,6 +8,7 @@
   "main": "lib/index.js",
   "devDependencies": {
     "@babel/core": "^7.17.10",
+    "@babel/plugin-transform-modules-commonjs": "^7.17.9",
     "@babel/preset-env": "^7.17.10",
     "@keneanung/iron-realms-nexus-typings": "^0.2.0",
     "@keneanung/nexus-package-builder": "^1.1.0",
@@ -27,6 +28,7 @@
     "eslint-webpack-plugin": "^3.1.1",
     "jest": "^27.5.1",
     "prettier": "^2.6.2",
+    "regenerator-runtime": "^0.13.9",
     "ts-jest": "^27.1.4",
     "ts-loader": "^9.3.0",
     "typescript": "^4.6.4",

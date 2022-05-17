@@ -104,19 +104,18 @@ export class EventBus implements IEventBus {
   public async raise<T>(eventName: string, eventArgument: T) {
     const subscriptions = this.subscriptions[eventName];
 
-    await this.runCallbacks<T>(subscriptions, eventArgument);
+    await this.runCallbacks<T>(subscriptions, eventArgument, eventName);
 
-    await this.runCallbacks<T>(this.subscriptionsToAll, eventArgument);
+    await this.runCallbacks<T>(this.subscriptionsToAll, eventArgument, eventName);
   }
 
-  private async runCallbacks<T>(subscriptions: EventCallbackSubscriptions, eventArgument: T) {
+  private async runCallbacks<T>(subscriptions: EventCallbackSubscriptions, eventArgument: T, eventName: string) {
     if (subscriptions !== undefined) {
-      const callbacks = subscriptions.values();
-      for (const callback of callbacks) {
+      for (const [name, callback] of subscriptions) {
         try {
           await callback(eventArgument);
         } catch (e: unknown) {
-          console.error(e);
+          console.error(`Error in callback '${name}' for event '${eventName}'`, e);
         }
       }
     }

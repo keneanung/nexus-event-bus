@@ -277,7 +277,7 @@ test('Output thrown error to console on error', async () => {
   mock.mockRestore();
 });
 
-test("inner functions of non-async callbacks should be called synchronously", async () => {
+test('inner functions of non-async callbacks should be called synchronously', async () => {
   const bus = new EventBus();
   const innerFunction = jest.fn();
   const callback = jest.fn(() => {

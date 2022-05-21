@@ -237,7 +237,9 @@ test('Overwrite existing subscriber with the same name if enabled', () => {
 
 test('Output name of callback to console on error', async () => {
   const bus = new EventBus();
-  const callback = async () => {throw new Error()};
+  const callback = async () => {
+    throw new Error();
+  };
   bus.subscribe('*', callback, 'my callback');
   const mock = jest.spyOn(console, 'error').mockImplementation();
 
@@ -249,7 +251,9 @@ test('Output name of callback to console on error', async () => {
 
 test('Output name of event to console on error', async () => {
   const bus = new EventBus();
-  const callback = async () => {throw new Error()};
+  const callback = async () => {
+    throw new Error();
+  };
   bus.subscribe('*', callback, 'my callback');
   const mock = jest.spyOn(console, 'error').mockImplementation();
 
@@ -261,7 +265,9 @@ test('Output name of event to console on error', async () => {
 
 test('Output thrown error to console on error', async () => {
   const bus = new EventBus();
-  const callback = async () => {throw new Error('test error')};
+  const callback = async () => {
+    throw new Error('test error');
+  };
   bus.subscribe('*', callback, 'my callback');
   const mock = jest.spyOn(console, 'error').mockImplementation();
 

@@ -114,7 +114,11 @@ export class EventBus implements IEventBus {
     await this.runCallbacks<T>(this.subscriptionsToAll, eventArgument, eventName);
   }
 
-  private async runCallbacks<T>(subscriptions: EventCallbackSubscriptions | undefined, eventArgument: T, eventName: string) {
+  private async runCallbacks<T>(
+    subscriptions: EventCallbackSubscriptions | undefined,
+    eventArgument: T,
+    eventName: string,
+  ) {
     if (subscriptions !== undefined) {
       for (const [name, callback] of subscriptions) {
         try {

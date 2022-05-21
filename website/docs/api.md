@@ -105,6 +105,8 @@ eventBus.subscribe("*", (data) => {
 
 Raises the event with the given name and calls all subscribed callbacks. The callbacks receive the given data as their argument.
 
+*Note*: This is an async function. If you want to wait for all events to have been raised before continuing the execution of your code, use `await eventBus.raise(event)` in external JavaScript. If you call this in a Nexus script directly, `await` can't be used and you must use Promises explicitly, see examples.
+
 ### Examples ###
 
 ```js
@@ -120,6 +122,14 @@ eventBus.raise("test", {
 ```js
 const name = 'Keneanung';
 eventBus.raise("sawPlayer", name);
+```
+
+```js
+// Use this pattern inside Nexus scripts
+eventBus.raise("test", "TestArgument").then(() => {
+    console.log("after all callbacks have run");
+});
+console.log("some time (non-deterministic, might be during the callback runs)");
 ```
 
 ## `eventBus.unsubscribe(event, callback)` ##

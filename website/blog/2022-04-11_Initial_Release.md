@@ -12,7 +12,7 @@ While there are already implementations of the event bus for the Nexus MUD clien
 
 This release is the minimal viable product and contains the most basic functionality: Registering event handlers, raising events and unregistering event handlers. The [API documentation](https://keneanung.github.io/nexus-event-bus/docs/api) has all the gritty details.
 
-More features may be added in the future. Feel free to [create a new issue](https://github.com/keneanung/nexus-event-bus/issues/new) to discuss further extnsions.
+More features may be added in the future. Feel free to [create a new issue](https://github.com/keneanung/nexus-event-bus/issues/new) to discuss further extensions.
 
 If you like my work and want to support me, please consider [sponsoring me](https://github.com/sponsors/keneanung).
 

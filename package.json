@@ -12,6 +12,8 @@
     "@babel/preset-env": "^7.17.10",
     "@keneanung/iron-realms-nexus-typings": "^0.2.0",
     "@keneanung/nexus-package-builder": "^1.1.0",
+    "@stryker-mutator/core": "^6.0.2",
+    "@stryker-mutator/jest-runner": "^6.0.2",
     "@types/jest": "^27.5.0",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.23.0",

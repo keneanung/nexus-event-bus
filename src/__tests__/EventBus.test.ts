@@ -119,6 +119,19 @@ test('Return all registered subscribers to all events', () => {
   );
 });
 
+test('Return all subscribers to an event if multiple callbacks are subscribed', () => {
+  const bus = new EventBus();
+  const callback1 = jest.fn();
+  const callback2 = jest.fn();
+
+  bus.subscribe('TestEvent', callback1);
+  bus.subscribe('TestEvent', callback2);
+
+  const subscribers = bus.getSubscribers('TestEvent');
+
+  expect(subscribers).toHaveLength(2);
+});
+
 test('Return empty array when no subscribers are registered', () => {
   const bus = new EventBus();
 
@@ -163,6 +176,17 @@ test('Return subscribers to all events', () => {
       }),
     ]),
   );
+});
+
+test('Not return subscribers to specialized events if subscribers to all events are requested', () => {
+  const bus = new EventBus();
+  const callback1 = jest.fn();
+  const callback2 = jest.fn();
+
+  bus.subscribe('*', callback1);
+  bus.subscribe('TestEvent', callback2);
+
+  expect(bus.getSubscribers('*')).toHaveLength(1);
 });
 
 test('Unsubscribe subscriber by name', () => {

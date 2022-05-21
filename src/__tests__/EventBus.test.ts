@@ -276,3 +276,19 @@ test('Output thrown error to console on error', async () => {
   expect(mock).toBeCalledWith(expect.any(String), new Error('test error'));
   mock.mockRestore();
 });
+
+test("inner functions of non-async callbacks should be called synchronously", async () => {
+  const bus = new EventBus();
+  const innerFunction = jest.fn();
+  const callback = jest.fn(() => {
+    innerFunction();
+  });
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  bus.subscribe('*', callback);
+
+  await bus.raise('TestEvent', undefined);
+
+  expect(innerFunction).toHaveBeenCalledTimes(1);
+});

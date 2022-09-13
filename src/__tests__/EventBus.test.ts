@@ -27,7 +27,7 @@ test('Allow to subscribe to all events', async () => {
   await bus.raise('TestEvent1', 'foo');
   await bus.raise('TetsEvent2', 'bar');
 
-  expect(callback).toBeCalledTimes(2);
+  expect(callback).toHaveBeenCalledTimes(2);
 });
 
 test('Allow all callbacks to run on error', async () => {
@@ -42,7 +42,7 @@ test('Allow all callbacks to run on error', async () => {
   await bus.raise('TestEvent', undefined);
 
   mock.mockRestore();
-  expect(callback).toBeCalledTimes(1);
+  expect(callback).toHaveBeenCalledTimes(1);
 });
 
 test('Allow to unsubscribe from events', async () => {
@@ -54,7 +54,7 @@ test('Allow to unsubscribe from events', async () => {
   bus.unsubscribe('TestEvent', callback);
   await bus.raise('TestEvent', undefined);
 
-  expect(callback).toBeCalledTimes(1);
+  expect(callback).toHaveBeenCalledTimes(1);
 });
 
 test('Allow to unsubscribe from events we never subscribed to', async () => {
@@ -86,7 +86,7 @@ test('Allow to unsubscribe from all events', async () => {
   bus.unsubscribe('*', callback);
   await bus.raise('TestEvent', undefined);
 
-  expect(callback).toBeCalledTimes(1);
+  expect(callback).toHaveBeenCalledTimes(1);
 });
 
 test('Return all registered subscribers to an event', () => {
@@ -245,7 +245,7 @@ test('Output name of callback to console on error', async () => {
 
   await bus.raise('TestEvent', undefined);
 
-  expect(mock).toBeCalledWith(expect.stringContaining('my callback'), expect.anything());
+  expect(mock).toHaveBeenCalledWith(expect.stringContaining('my callback'), expect.anything());
   mock.mockRestore();
 });
 
@@ -259,7 +259,7 @@ test('Output name of event to console on error', async () => {
 
   await bus.raise('TestEvent', undefined);
 
-  expect(mock).toBeCalledWith(expect.stringContaining('TestEvent'), expect.anything());
+  expect(mock).toHaveBeenCalledWith(expect.stringContaining('TestEvent'), expect.anything());
   mock.mockRestore();
 });
 
@@ -273,7 +273,7 @@ test('Output thrown error to console on error', async () => {
 
   await bus.raise('TestEvent', undefined);
 
-  expect(mock).toBeCalledWith(expect.any(String), new Error('test error'));
+  expect(mock).toHaveBeenCalledWith(expect.any(String), new Error('test error'));
   mock.mockRestore();
 });
 

@@ -15,7 +15,7 @@
     "@stryker-mutator/core": "^6.0.2",
     "@stryker-mutator/jest-runner": "^6.0.2",
     "@types/jest": "^27.5.0",
-    "@types/uuid": "^8.3.4",
+    "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/experimental-utils": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",

@@ -46,7 +46,7 @@ jobs:
           run: |
             npm ci
             npm run webpackProd
-            npx @keneanung/nexus-package-builder -v $(jq .r '.version' package.json) nxs/EventBus.yaml nxs/
+            npx @keneanung/nexus-package-builder -v $(jq -r '.version' package.json) nxs/EventBus.yaml nxs/
         - name: copy assets to website
           run: |
             cp nxs/EventBus.nxs website/static/

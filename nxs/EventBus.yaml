@@ -3,6 +3,7 @@ name: eventbus
 enabled: true
 description: Event Bus similar to the Nexus function system, but available outside of the GUI
 type: group
+website: https://keneanung.github.io/nexus-event-bus/
 items:
   - type: function
     enabled: true

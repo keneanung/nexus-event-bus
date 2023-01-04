@@ -2,12 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://keneanung.github.io/nexus-event-bus/blog</id>
     <title>Iron Realms Nexus Event Bus Blog</title>
-    <updated>2022-05-21T00:00:00.000Z</updated>
+    <updated>2023-01-02T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://keneanung.github.io/nexus-event-bus/blog"/>
     <subtitle>Iron Realms Nexus Event Bus Blog</subtitle>
     <icon>https://keneanung.github.io/nexus-event-bus/img/favicon.ico</icon>
     <rights>Copyright © 2023 keneanung</rights>
+    <entry>
+        <title type="html"><![CDATA[Packaging improvements: v0.5.0 + v0.5.1]]></title>
+        <id>/2023/01/02/_Packaging</id>
+        <link href="https://keneanung.github.io/nexus-event-bus/blog/2023/01/02/_Packaging"/>
+        <updated>2023-01-02T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[This release does not contain any changes to the code of the event bus itself. Rather, it facilitates improvements to the packaging, adding version and website information directly into the package.]]></summary>
+        <content type="html"><![CDATA[<p>This release does not contain any changes to the code of the event bus itself. Rather, it facilitates improvements to the packaging, adding version and website information directly into the package.</p><p>Additionally, dependencies were updated.</p><p>Version 0.5.1 contained infrastructure fixes only.</p><p>If you find bugs, would like to see more features and discuss particular design choices, feel free to <a href="https://github.com/keneanung/nexus-event-bus/issues/new" target="_blank" rel="noopener noreferrer">create a new issue</a> to get in touch.</p><p>If you like my work and want to support me, please consider <a href="https://github.com/sponsors/keneanung" target="_blank" rel="noopener noreferrer">sponsoring me</a>.</p>]]></content>
+        <author>
+            <name>keneanung</name>
+            <email>keneanung@gmail.com</email>
+            <uri>https://github.com/keneanung</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Developer Experience: v0.4.0]]></title>
         <id>/2022/05/21/_Developer_Experience</id>

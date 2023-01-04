@@ -5,6 +5,19 @@
     "description": "Iron Realms Nexus Event Bus Blog",
     "items": [
         {
+            "id": "/2023/01/02/_Packaging",
+            "content_html": "<p>This release does not contain any changes to the code of the event bus itself. Rather, it facilitates improvements to the packaging, adding version and website information directly into the package.</p><p>Additionally, dependencies were updated.</p><p>Version 0.5.1 contained infrastructure fixes only.</p><p>If you find bugs, would like to see more features and discuss particular design choices, feel free to <a href=\"https://github.com/keneanung/nexus-event-bus/issues/new\" target=\"_blank\" rel=\"noopener noreferrer\">create a new issue</a> to get in touch.</p><p>If you like my work and want to support me, please consider <a href=\"https://github.com/sponsors/keneanung\" target=\"_blank\" rel=\"noopener noreferrer\">sponsoring me</a>.</p>",
+            "url": "https://keneanung.github.io/nexus-event-bus/blog/2023/01/02/_Packaging",
+            "title": "Packaging improvements: v0.5.0 + v0.5.1",
+            "summary": "This release does not contain any changes to the code of the event bus itself. Rather, it facilitates improvements to the packaging, adding version and website information directly into the package.",
+            "date_modified": "2023-01-02T00:00:00.000Z",
+            "author": {
+                "name": "keneanung",
+                "url": "https://github.com/keneanung"
+            },
+            "tags": []
+        },
+        {
             "id": "/2022/05/21/_Developer_Experience",
             "content_html": "<p>This release focuses mainly on the developer experience and only has a minor change for users.</p><h2 class=\"anchor anchorWithStickyNavbar_LWe7\" id=\"error-messages-now-include-callback-name-and-event-name\">Error messages now include callback name and event name<a class=\"hash-link\" href=\"#error-messages-now-include-callback-name-and-event-name\" title=\"Direct link to heading\">​</a></h2><p>If a callback errors, error messages would simply print the error message and a stacktrace. This has been enhanced to include the callback and event names.</p><h2 class=\"anchor anchorWithStickyNavbar_LWe7\" id=\"developer-experience-changes\">Developer experience changes<a class=\"hash-link\" href=\"#developer-experience-changes\" title=\"Direct link to heading\">​</a></h2><p>To improve the developer experience, the following changes have been made:</p><ul><li>The TypeScript code allows the usage of the latest syntax. The code is then transpiled to older JavaScript compatibility using Babel.</li><li>Explicitly define the supported browsers. Most notably, Internet Explorer 11 is not supported as it increases the code size immensely and is not officially supported by Microsoft anymore.</li><li>Configure StrykerJS. This is a tool that can find holes in your test coverage by mutating your code with common programming mistakes and making sure your tests catch those.</li></ul><p>If you find bugs, would like to see more features and discuss particular design choices, feel free to <a href=\"https://github.com/keneanung/nexus-event-bus/issues/new\" target=\"_blank\" rel=\"noopener noreferrer\">create a new issue</a> to get in touch.</p><p>If you like my work and want to support me, please consider <a href=\"https://github.com/sponsors/keneanung\" target=\"_blank\" rel=\"noopener noreferrer\">sponsoring me</a>.</p>",
             "url": "https://keneanung.github.io/nexus-event-bus/blog/2022/05/21/_Developer_Experience",

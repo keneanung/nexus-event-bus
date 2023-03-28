@@ -21,7 +21,7 @@
     "@typescript-eslint/parser": "^5.23.0",
     "acorn": "^8.7.1",
     "babel-loader": "^9.0.1",
-    "babel-plugin-react-native-web": "^0.18.0",
+    "babel-plugin-react-native-web": "^0.19.1",
     "core-js": "^3.22.5",
     "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.5.0",

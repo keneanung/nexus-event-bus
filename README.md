@@ -1,3 +1,5 @@
+> Repository archived. All code was moved to https://github.com/keneanung/nexus-scripts and lives on there. For more background, please read https://keneanung.github.io/nexus-scripts/blog/2023/06/23/_a_new_home.
+
 # Iron Realms Nexus Event Bus #
 
 An implementation of the [publish-subscriber pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) at its core.
